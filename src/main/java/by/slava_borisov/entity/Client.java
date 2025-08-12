@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -30,18 +31,18 @@ public class Client {
     @Column(name = "reg_date", nullable = false)
     private LocalDateTime registrationDate;
 
-    @OneToOne()
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     private Profile profile;
 
-    @OneToMany(mappedBy = "clients")
-    private Order order;
+    @OneToMany(mappedBy = "clients", cascade = CascadeType.ALL)
+    private List<Order> orders = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "client_coupons",
             joinColumns = @JoinColumn(name = "client_id"),
             inverseJoinColumns = @JoinColumn(name = "coupon_id")
     )
-    private List<Coupon> coupons;
+    private List<Coupon> coupons = new ArrayList<>();
 }
