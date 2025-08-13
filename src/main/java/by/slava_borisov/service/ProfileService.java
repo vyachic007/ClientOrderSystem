@@ -2,18 +2,16 @@ package by.slava_borisov.service;
 
 import by.slava_borisov.entity.Profile;
 import by.slava_borisov.helper.TransactionHelper;
+import by.slava_borisov.service_util.BaseService;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ProfileService {
+public class ProfileService extends BaseService {
 
-    private final SessionFactory sessionFactory;
-    private final TransactionHelper transactionHelper;
 
-    public ProfileService(SessionFactory sessionFactory, TransactionHelper transactionHelper) {
-        this.sessionFactory = sessionFactory;
-        this.transactionHelper = transactionHelper;
+    protected ProfileService(SessionFactory sessionFactory, TransactionHelper transactionHelper) {
+        super(sessionFactory, transactionHelper);
     }
 
     public void updateProfile(Long id, String newAddress, String newPhone) {

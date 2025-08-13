@@ -2,20 +2,17 @@ package by.slava_borisov.service;
 
 import by.slava_borisov.entity.Coupon;
 import by.slava_borisov.helper.TransactionHelper;
+import by.slava_borisov.service_util.BaseService;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
 @Service
-public class CouponService {
-
-    private final SessionFactory sessionFactory;
-    private final TransactionHelper transactionHelper;
+public class CouponService extends BaseService {
 
     public CouponService(SessionFactory sessionFactory, TransactionHelper transactionHelper) {
-        this.sessionFactory = sessionFactory;
-        this.transactionHelper = transactionHelper;
+        super(sessionFactory, transactionHelper);
     }
 
     public void updateCoupon(Long id, String code, BigDecimal discount) {

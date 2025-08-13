@@ -4,6 +4,7 @@ import by.slava_borisov.entity.Client;
 import by.slava_borisov.entity.Order;
 import by.slava_borisov.entity.Status;
 import by.slava_borisov.helper.TransactionHelper;
+import by.slava_borisov.service_util.BaseService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
@@ -13,14 +14,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class OrderService {
+public class OrderService extends BaseService {
 
-    private final SessionFactory sessionFactory;
-    private final TransactionHelper transactionHelper;
 
     public OrderService(SessionFactory sessionFactory, TransactionHelper transactionHelper) {
-        this.sessionFactory = sessionFactory;
-        this.transactionHelper = transactionHelper;
+        super(sessionFactory, transactionHelper);
     }
 
     public List<Order> findOrders(LocalDate orderDate, BigDecimal totalAmount, Status status) {
