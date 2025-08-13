@@ -176,7 +176,8 @@ public class Main {
         String totalAmountStr = scanner.nextLine();
         BigDecimal totalAmount = (totalAmountStr.isEmpty()) ? null : new BigDecimal(totalAmountStr);
 
-        System.out.print("Введите статус заказа (PENDING/CONFIRMED/PROCESSING/COMPLETED/CANCELLED, или нажмите Enter, чтобы пропустить): ");
+        System.out.print("Введите статус заказа " +
+                         "(PENDING/CONFIRMED/PROCESSING/COMPLETED/CANCELLED, или нажмите Enter, чтобы пропустить): ");
         String statusStr = scanner.nextLine();
         Status status = (statusStr.isEmpty()) ? null : Status.valueOf(statusStr.toUpperCase());
 
