@@ -24,6 +24,7 @@ public class Profile {
     @Column(name = "phone", nullable = false, length = 25)
     private String phone;
 
-    @OneToOne(mappedBy = "profile")
+    @OneToOne
+    @JoinColumn(name = "client_id")
     private Client client;
 }

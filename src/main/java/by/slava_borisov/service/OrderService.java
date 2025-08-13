@@ -56,14 +56,21 @@ public class OrderService {
 
     public void addOrder(Client client, LocalDate orderDate, BigDecimal totalAmount, Status status) {
         transactionHelper.executeInTransaction(session -> {
-            Order order = Order.builder()
-                    .orderDate(orderDate)
-                    .client(client)
-                    .totalAmount(totalAmount)
-                    .status(status)
-                    .build();
-           client.getOrders().add(order);
-           session.persist(order);
+            Client managedClient = session.get(Client.class, client.getId());
+            if (managedClient != null) {
+                Order order = Order.builder()
+                        .orderDate(orderDate)
+                        .client(managedClient)
+                        .totalAmount(totalAmount)
+                        .status(status)
+                        .build();
+
+                managedClient.getOrders().add(order);
+
+                session.persist(order);
+            } else {
+                throw new RuntimeException("Client with id " + client.getId() + " not found");
+            }
         });
     }
 
