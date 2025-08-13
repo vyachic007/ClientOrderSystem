@@ -1,5 +1,6 @@
 package by.slava_borisov.service;
 
+import by.slava_borisov.entity.Profile;
 import by.slava_borisov.helper.TransactionHelper;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
@@ -15,16 +16,16 @@ public class ProfileService {
         this.transactionHelper = transactionHelper;
     }
 
-    public void addProfile(String address, String phone) {
+    public void updateProfile(Long id, String newAddress, String newPhone) {
         transactionHelper.executeInTransaction(session -> {
-            session.createNativeQuery("""
-                    INSERT INTO Profile (address, phone)
-                    VALUES (:address, :phone)
-                    """, Object.class)
-                    .setParameter("address", address)
-                    .setParameter("phone", phone)
-                    .executeUpdate();
+            Profile profile = session.createQuery("SELECT p FROM Profile p WHERE p.id = :id", Profile.class)
+                    .setParameter("id", id)
+                    .uniqueResult();
+           if (profile != null) {
+               if (newAddress != null) profile.setAddress(newAddress);
+               if (newPhone != null) profile.setPhone(newPhone);
+               session.merge(profile);
+           }
         });
     }
-
 }

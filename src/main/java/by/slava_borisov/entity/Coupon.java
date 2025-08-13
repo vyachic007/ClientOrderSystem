@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,5 +29,5 @@ public class Coupon {
     private BigDecimal discount;
 
     @ManyToMany(mappedBy = "coupons")
-    private List<Client> clients;
+    private List<Client> clients = new ArrayList<>();
 }

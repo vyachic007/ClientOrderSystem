@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,13 +29,12 @@ public class Client {
     private String email;
 
     @Column(name = "reg_date", nullable = false)
-    private LocalDateTime registrationDate;
+    private LocalDate registrationDate;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
     private Profile profile;
 
-    @OneToMany(mappedBy = "clients", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Order> orders = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.ALL)

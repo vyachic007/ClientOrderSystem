@@ -7,15 +7,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.List;
+import java.time.LocalDate;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
-@Table
+@Table(name = "orders")
 public class Order {
 
     @Id
@@ -23,7 +22,7 @@ public class Order {
     private Long id;
 
     @Column(name = "order_date")
-    private LocalDateTime orderDate;
+    private LocalDate orderDate;
 
     @Column(name = "total_amount",nullable = false, precision = 10, scale = 2)
     private BigDecimal totalAmount;
@@ -33,5 +32,5 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "client_id", referencedColumnName = "id")
-    private List<Client> clients;
+    private Client client;
 }
