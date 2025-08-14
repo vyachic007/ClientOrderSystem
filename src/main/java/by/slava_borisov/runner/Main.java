@@ -26,7 +26,6 @@ public class Main {
         try (AnnotationConfigApplicationContext context =
                      new AnnotationConfigApplicationContext("by.slava_borisov")) {
 
-            // Инициализация сервисов
             clientService = context.getBean(ClientService.class);
             couponService = context.getBean(CouponService.class);
             orderService = context.getBean(OrderService.class);
