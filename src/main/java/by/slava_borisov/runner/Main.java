@@ -57,7 +57,7 @@ public class Main {
 
     private static int getChoice() {
         int choice = scanner.nextInt();
-        scanner.nextLine(); // Сбрасываем оставшийся символ новой строки
+        scanner.nextLine();
         return choice;
     }
 
