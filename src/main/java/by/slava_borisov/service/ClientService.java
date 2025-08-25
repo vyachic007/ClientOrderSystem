@@ -10,52 +10,13 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 
-@Service
-public class ClientService extends BaseService {
+public interface ClientService {
 
-    public ClientService(SessionFactory sessionFactory, TransactionHelper transactionHelper) {
-        super(sessionFactory, transactionHelper);
-    }
+     void addClient(String name, String email, String address, String phone);
 
-    public void addClient(String name, String email, String address, String phone) {
-        transactionHelper.executeInTransaction(session -> {
-            Client client = Client.builder()
-                    .name(name)
-                    .email(email)
-                    .registrationDate(LocalDate.now())
-                    .build();
+     void removeClient(Long id);
 
-            Profile profile = Profile.builder()
-                    .address(address)
-                    .phone(phone)
-                    .client(client)
-                    .build();
-
-            client.setProfile(profile);
-            session.persist(client);
-        });
-    }
-
-    public void removeClient(Long id) {
-        transactionHelper.executeInTransaction(session -> {
-            Client client = session.get(Client.class, id);
-            if (client != null) {
-                session.remove(client);
-            } else {
-                throw new RuntimeException("Клиент с id " + id + " не найден");
-            }
-        });
-    }
-
-    public Client getClientById(Long id) {
-        try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("SELECT c FROM Client c WHERE c.id = :id", Client.class)
-                    .setParameter("id", id)
-                    .uniqueResult();
-        } catch (Exception e) {
-            throw  new RuntimeException("Ошибка. Клиент с id " + id + " не найден", e);
-        }
-    }
+     Client getClientById(Long id);
 
 }
 
